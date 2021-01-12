@@ -17,7 +17,7 @@ db.once('open', () => {
    console.log('Database connected');
 });
 
-const sample = (array) => array[Math.floor(Math.random() * array.length)];
+const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
    await Campground.deleteMany({});
@@ -28,7 +28,7 @@ const seedDB = async () => {
          author: '5ff11ebffe0cfb2169690678',
          location: `${cities[random1000].city}, ${cities[random1000].state}`,
          title: `${sample(descriptors)} ${sample(places)}`,
-         image: 'https://source.unsplash.com/collection/483251',
+         images: [{ url: 'https://source.unsplash.com/collection/483251' }],
          description:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt inventore, nulla dolorem numquam ipsa neque nobis fugit esse ad doloremque, itaque soluta ipsum a minima voluptatum officiis reprehenderit, sint eaque.',
          price,
