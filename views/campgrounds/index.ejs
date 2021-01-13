@@ -1,13 +1,20 @@
 <% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/index.css" />
 <h1>All Campgrounds</h1>
 <div><a href="/campgrounds/new">Add Campground</a></div>
 <div>
    <% for (let campground of campgrounds) {%>
    <div class="card" mb-3>
       <div class="row">
+         <% if(campground.images.length){ %>
          <div class="col-md-4">
             <img class="img-fluid" src="<%=campground.images[0].url%>" alt="" />
          </div>
+         <% } else {%>
+         <div class="col-md-4">
+            <img class="img-fluid" src="" alt="" />
+         </div>
+         <% } %>
          <div class="col-md-8">
             <div class="card-body">
                <h5 class="card-title"><%= campground.title %></h5>

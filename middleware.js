@@ -27,7 +27,7 @@ module.exports.isAuthor = async (req, res, next) => {
 module.exports.validateCampground = (req, _res, next) => {
    const { error } = campgroundSchema.validate(req.body);
    if (error) {
-      const msg = error.details.map((el) => el.message).join(',');
+      const msg = error.details.map(el => el.message).join(',');
       throw new ExpressError(msg, 400);
    } else next();
 };
@@ -35,7 +35,7 @@ module.exports.validateCampground = (req, _res, next) => {
 module.exports.validateReview = (req, res, next) => {
    const { error } = reviewSchema.validate(req.body);
    if (error) {
-      const msg = error.details.map((el) => el.message).join(',');
+      const msg = error.details.map(el => el.message).join(',');
       throw new ExpressError(msg, 400);
    } else next();
 };

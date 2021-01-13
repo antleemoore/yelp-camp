@@ -1,8 +1,9 @@
 <% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/css/show.css" />
 <link rel="stylesheet" href="/css/stars.css" />
-
 <div class="row">
    <div class="col-6">
+      <div id="map" style="width: 400px; height: 300px"></div>
       <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
          <div class="carousel-inner">
             <% campground.images.forEach((img,i)=> { %>
@@ -133,7 +134,8 @@
       <% } else {%>
       <h4>Want to Leave A Review?</h4>
       <a class="btn btn-primary mb-3" href="/login">Login To Leave A Review</a>
-      <% } %> <% for(let review of campground.reviews) {%>
+      <% req.session.returnTo = req.originalUrl; %> <% } %> <% for(let review of
+      campground.reviews) {%>
       <div class="card mb-3">
          <div class="card-body">
             <h5 class="card-subtitle mb-3"><%= review.author.username %></h5>
@@ -154,3 +156,9 @@
       <% } %>
    </div>
 </div>
+<script>
+   const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+   // ignore error
+   const campground = <%- JSON.stringify(campground) %>;
+</script>
+<script src="/js/showPageMap.js"></script>
