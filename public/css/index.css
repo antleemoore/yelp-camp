@@ -1,1 +1,14 @@
-
+.card {
+   margin-bottom: 1em;
+}
+.img-fluid {
+   height: 300px;
+}
+h1 {
+   text-align: center;
+   color: white;
+}
+a {
+   display: block;
+   text-align: center;
+}

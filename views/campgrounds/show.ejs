@@ -2,13 +2,17 @@
 <link rel="stylesheet" href="/css/show.css" />
 <link rel="stylesheet" href="/css/stars.css" />
 <div class="row">
-   <div class="col-6">
-      <div id="map" style="width: 400px; height: 300px"></div>
+   <div class="col-md-6 col-sm-12">
       <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
          <div class="carousel-inner">
             <% campground.images.forEach((img,i)=> { %>
             <div class="carousel-item <%= i == 0 ? 'active' : '' %>">
-               <img src="<%= img.url%>" class="d-block w-100" alt="" />
+               <img
+                  src="<%= img.url%>"
+                  class="d-block w-100"
+                  alt=""
+                  style="width: auto; height: 423px"
+               />
             </div>
             <% }) %>
          </div>
@@ -64,7 +68,8 @@
          <div class="card-footer text-muted">Posted # Days Ago</div>
       </div>
    </div>
-   <div class="col-6">
+   <div class="col-md-6 col-sm-12">
+      <div id="map"></div>
       <% if(currentUser){ %>
       <h4>Leave A Review</h4>
       <form
@@ -76,7 +81,7 @@
          <div class="mb-3">
             <div class="mb-3">
                <fieldset class="starability-grow">
-                  <legend>First rating:</legend>
+                  <legend>Rating:</legend>
                   <input
                      type="radio"
                      id="first-rate1"

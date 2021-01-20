@@ -8,6 +8,7 @@ const {
    renderEditForm,
    editCampground,
    deleteCampground,
+   searchCampgrounds,
 } = require('../controllers/campgrounds');
 const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
 const multer = require('multer');
@@ -20,6 +21,7 @@ router
    .post(isLoggedIn, upload.array('image'), validateCampground, newCampground);
 
 router.get('/new', isLoggedIn, renderNewForm);
+router.get('/find', searchCampgrounds);
 router
    .route('/:id')
    .put(

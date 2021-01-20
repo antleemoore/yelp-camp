@@ -78,3 +78,16 @@ module.exports.deleteCampground = catchAsync(async (req, res) => {
    req.flash('success', 'Successfully deleted campground!');
    res.redirect('/campgrounds');
 });
+module.exports.searchCampgrounds = catchAsync(async (req, res) => {
+   const { search } = req.query;
+   if (search === '') {
+      res.redirect('/campgrounds');
+   }
+   const results = await Campground.find({
+      $or: [
+         { title: { $regex: new RegExp(search, 'i') } },
+         { location: { $regex: new RegExp(search, 'i') } },
+      ],
+   });
+   res.render('campgrounds/search', { results, search });
+});

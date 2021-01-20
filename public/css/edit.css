@@ -1,1 +1,7 @@
-
+label,
+h1 {
+   color: white;
+}
+.img-thumbnail {
+   height: 150px;
+}

@@ -1,6 +1,10 @@
 <% layout('layouts/boilerplate') %>
 <link rel="stylesheet" href="/css/index.css" />
-<h1>All Campgrounds</h1>
+<% if (results.length === 0) { %>
+<h1>No results for "<%= search %>"</h1>
+<% } else { %>
+<h1>Showing <%= results.length %> Results for "<%= search %>"</h1>
+<% } %>
 <form class="d-flex p-4" action="/campgrounds/find">
    <input
       class="form-control me-2"
@@ -11,26 +15,19 @@
    />
    <button class="btn btn-success" type="submit">Search</button>
 </form>
-<div id="cluster-map"></div>
-
+<a href="/campgrounds">Return to All Campgrounds</a>
+<% if (results.length !== 0) { %>
+<div class="my-2" id="cluster-map"></div>
+<% } %>
 <div>
-   <a
-      class="btn btn-secondary d-block p-2 mx-5 my-2"
-      style="margin-bottom: 2rem"
-      href="/campgrounds/new"
-      >Add Campground</a
-   >
-</div>
-
-<div>
-   <% for (let campground of campgrounds) {%>
+   <% for (let result of results) {%>
    <div class="card" mb-3>
       <div class="row">
-         <% if(campground.images.length){ %>
+         <% if(result.images.length){ %>
          <div class="col-md-4 align-self-center bg-light">
             <img
                class="img-fluid mx-auto d-block"
-               src="<%=campground.images[0].url%>"
+               src="<%=result.images[0].url%>"
                alt=""
             />
          </div>
@@ -41,13 +38,13 @@
          <% } %>
          <div class="col-md-8">
             <div class="card-body">
-               <h5 class="card-title"><%= campground.title %></h5>
-               <p class="card-text"><%= campground.description %></p>
+               <h5 class="card-title"><%= result.title %></h5>
+               <p class="card-text"><%= result.description %></p>
                <p class="card-text">
-                  <small class="text-muted"><%= campground.location %> </small>
+                  <small class="text-muted"><%= result.location %> </small>
                </p>
-               <a href="/campgrounds/<%=campground._id%>" class="btn btn-primary">
-                  View <%= campground.title %>
+               <a href="/campgrounds/<%=result._id%>" class="btn btn-primary">
+                  View <%= result.title %>
                </a>
             </div>
          </div>
@@ -58,6 +55,6 @@
 <script>
    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
    // ignore error
-   const campgrounds = {features: <%- JSON.stringify(campgrounds)%>}
+   const campgrounds = {features: <%- JSON.stringify(results)%>}
 </script>
 <script src="/js/clusterMap.js"></script>

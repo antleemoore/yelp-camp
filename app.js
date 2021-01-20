@@ -19,6 +19,9 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/User');
 const userRoutes = require('./routes/users');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const { contentSecurityPolicy } = require('helmet');
 
 // DB connect
 mongoose.connect(process.env.DB_URL, {
@@ -42,15 +45,19 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // Session
 const oneWeek = 1000 * 60 * 60 * 24 * 7;
 const sessionConfig = {
+   name: 'session',
    secret: 'testsecret',
    resave: false,
    saveUninitialized: true,
    cookie: {
       httpOnly: true,
+      // secure: true,
       expires: Date.now() + oneWeek,
       maxAge: oneWeek,
    },
