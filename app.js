@@ -22,9 +22,11 @@ const userRoutes = require('./routes/users');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const { contentSecurityPolicy } = require('helmet');
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const MongoStore = require('connect-mongo')(session);
 
 // DB connect
-mongoose.connect(process.env.DB_URL, {
+mongoose.connect(dbUrl, {
    useNewUrlParser: true,
    useCreateIndex: true,
    useUnifiedTopology: true,
@@ -49,10 +51,22 @@ app.use(mongoSanitize());
 app.use(helmet({ contentSecurityPolicy: false }));
 
 // Session
+const secret = process.env.SECRET || 'devsecret';
 const oneWeek = 1000 * 60 * 60 * 24 * 7;
+const store = new MongoStore({
+   url: dbUrl,
+   secret: secret,
+   touchAfter: 24 * 60 * 60,
+});
+
+store.on('error', function (e) {
+   console.log('SESSION STORE ERROR', e);
+});
+
 const sessionConfig = {
+   store,
    name: 'session',
-   secret: 'testsecret',
+   secret: secret,
    resave: false,
    saveUninitialized: true,
    cookie: {
