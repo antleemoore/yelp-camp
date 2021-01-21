@@ -20,6 +20,7 @@ db.once('open', () => {
 });
 
 const seedDB = async () => {
+   Campground.deleteMany({});
    for (state of states) {
       try {
          await fetch(
@@ -45,7 +46,7 @@ const seedDB = async () => {
                   if (longitude < -169.700724 || longitude > -52.454636) continue;
                   if (latitude < 23.477506 || latitude > 71.990591) continue;
                   const seedCG = {
-                     location: pstate,
+                     location: state.State,
                      title: facilityName,
                      images: [
                         { url: `https://www.reserveamerica.com${faciltyPhoto}` },
@@ -89,5 +90,5 @@ function createDescription(
    return string;
 }
 seedDB().then(() => {
-   console.log('DB seeded');
+   console.log('DB seeded, use ^C to close.');
 });
