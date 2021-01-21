@@ -24,7 +24,7 @@ const seedDB = async () => {
    for (state of states) {
       try {
          await fetch(
-            `http://api.amp.active.com/camping/campgrounds/?pstate=${state.Code}&api_key=pczyeewzn7877nqwnvbfyj5w`
+            `http://api.amp.active.com/camping/campgrounds/?pstate=${state.Code}&api_key=${process.env.CAMP_API_KEY}`
          )
             .then(response => response.text())
             .then(data => parser.toJson(data, { object: true }))
@@ -82,7 +82,13 @@ function createDescription(
    sitesWithWaterHookup,
    sitesWithWaterfront
 ) {
-   const string = `Does the campsites have amps? ${sitesWithAmps}\nDoes the campsites allow pets? ${sitesWithPetsAllowed}\nDoes the campsites have sewer hookup? ${sitesWithSewerHookup}\nDoes the campsites have water hookup? ${sitesWithWaterHookup}\n${
+   const string = `Do the campsites have amps? ${
+      sitesWithAmps === 'Y' ? 'Yes' : 'No'
+   }.  Are pets allowed? ${
+      sitesWithPetsAllowed === 'Y' ? 'Yes' : 'No'
+   }.  Do the campsites have sewer hookup? ${
+      sitesWithSewerHookup === 'Y' ? 'Yes' : 'No'
+   }.  Do the campsites have water hookup? ${sitesWithWaterHookup}.  ${
       sitesWithWaterfront === ''
          ? ''
          : `This campsite is on a ${sitesWithWaterfront}\n`

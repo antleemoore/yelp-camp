@@ -4,10 +4,18 @@ const { cloudinary } = require('../cloudinaryConfig');
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+const mongoose = require('mongoose');
+const paginate = require('paginate')({ mongoose });
 
-module.exports.index = catchAsync(async (_req, res) => {
-   const campgrounds = await Campground.find({});
-   res.render('campgrounds/index', { campgrounds });
+module.exports.index = catchAsync(async (req, res) => {
+   const allCampgrounds = await Campground.find({});
+   await Campground.find({}).paginate(
+      { page: req.query.page },
+      function (err, campgrounds) {
+         let page = !req.query.page ? 1 : req.query.page;
+         res.render('campgrounds/index', { campgrounds, allCampgrounds, page });
+      }
+   );
 });
 module.exports.renderNewForm = (_req, res) => {
    res.render('campgrounds/new');

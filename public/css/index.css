@@ -12,3 +12,9 @@ a {
    display: block;
    text-align: center;
 }
+.prev {
+   float: left;
+}
+.next {
+   float: right;
+}
