@@ -44,10 +44,13 @@
          </div>
          <ul class="list-group list-group-flush">
             <li class="list-group-item text-muted"><%= campground.location %></li>
+            <% if(campground.author){ %>
             <li class="list-group-item text-muted sm">
                Submitted by: <%= campground.author.username %>
             </li>
+            <% } %> <% if(campground.price){ %>
             <li class="list-group-item">$<%= campground.price %>/night</li>
+            <% } %>
          </ul>
          <% if (currentUser && campground.author.equals(currentUser._id)) { %>
          <div class="card-body">
@@ -65,7 +68,6 @@
             </form>
          </div>
          <% } %>
-         <div class="card-footer text-muted">Posted # Days Ago</div>
       </div>
    </div>
    <div class="col-md-6 col-sm-12">
