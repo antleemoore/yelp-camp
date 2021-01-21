@@ -88,7 +88,9 @@ function createDescription(
       sitesWithPetsAllowed === 'Y' ? 'Yes' : 'No'
    }.  Do the campsites have sewer hookup? ${
       sitesWithSewerHookup === 'Y' ? 'Yes' : 'No'
-   }.  Do the campsites have water hookup? ${sitesWithWaterHookup}.  ${
+   }.  Do the campsites have water hookup? ${
+      sitesWithWaterHookup === 'Y' ? 'Yes' : 'No'
+   }.  ${
       sitesWithWaterfront === ''
          ? ''
          : `This campsite is on a ${sitesWithWaterfront}\n`
