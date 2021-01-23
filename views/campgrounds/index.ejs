@@ -11,7 +11,7 @@
    />
    <button class="btn btn-success" type="submit">Search</button>
 </form>
-<div class="mb-2" id="cluster-map"></div>
+<!-- <div class="mb-2" id="cluster-map"></div> -->
 
 <div>
    <% for (let campground of campgrounds) {%>
@@ -54,7 +54,7 @@
          Previous Page
       </button>
    </form>
-   <% } %> <% if (page < allCampgrounds.length / 10) { %>
+   <% } %> <% if (page < numCampgrounds/ 10) { %>
    <form action="/campgrounds" method="GET">
       <button name="page" value="<%= ++page %>" class="btn btn-outline-info next">
          Next Page
@@ -62,10 +62,3 @@
    </form>
    <% } %>
 </div>
-
-<script>
-   const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
-   // ignore error
-   const campgrounds = {features: <%- JSON.stringify(allCampgrounds)%>}
-</script>
-<script src="/js/clusterMap.js"></script>

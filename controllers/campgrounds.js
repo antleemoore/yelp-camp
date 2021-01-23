@@ -8,12 +8,12 @@ const mongoose = require('mongoose');
 const paginate = require('paginate')({ mongoose });
 
 module.exports.index = catchAsync(async (req, res) => {
-   const allCampgrounds = await Campground.find({});
+   const numCampgrounds = await Campground.countDocuments({});
    await Campground.find({}).paginate(
       { page: req.query.page },
       function (err, campgrounds) {
          let page = !req.query.page ? 1 : req.query.page;
-         res.render('campgrounds/index', { campgrounds, allCampgrounds, page });
+         res.render('campgrounds/index', { campgrounds, numCampgrounds, page });
       }
    );
 });
